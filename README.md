@@ -18,7 +18,7 @@ A block is a function a class or a namespaces. If can be useful to ignore the di
 You could use [straight](https://github.com/radian-software/straight.el) to install the package like so - if you use straight.
 
 ```
-(straight-use-package '(copilot-hydra :type git :host github :repo "talwrii/tide-nav.el"))
+(straight-use-package '(tide-nav :type git :host github :repo "talwrii/tide-nav.el"))
 ```
 
 Alternatively you can clone this repository with git and add to you emacs [load-path](https://www.gnu.org/software/emacs/manual/html_node/use-package/Load-path.html)
