@@ -18,10 +18,13 @@
 (defun tide-nav-which-function ()
   "Show the current function or method in the mini-bar."
   (interactive)
-  (let ((function (tide-nav--point-node (tide-nav-get-functions))))
+  (let ((function (tide-nav--which-function)))
     (if function
         (message (tide-nav--format-function function))
       (message "Not in a function"))))
+
+(defun tide-nav--which-function ()
+  (tide-nav--point-node (tide-nav-get-functions)))
 
 (defun tide-nav-which-block ()
   "Show the current classes, namespaces and methods in the mini-bar."
@@ -35,6 +38,14 @@
   "Go back to the class definition; or to the previous class definition."
   (interactive)
   (let ((line (save-excursion (previous-line) (tide-nav--start-line (tide-nav--which-class)))))
+    (if line
+      (goto-line line)
+      (message "No previous class"))))
+
+(defun tide-nav-back-function ()
+  "Go back to the class definition; or to the previous class definition."
+  (interactive)
+  (let ((line (save-excursion (previous-line) (tide-nav--start-line (tide-nav--which-function)))))
     (if line
       (goto-line line)
       (message "No previous class"))))
@@ -113,7 +124,7 @@
 (defun tide-nav--is-block (node)
   "Check if the NODE is a block."
   (or
-   (member (plist-get x :kind) (list "module" "class" "function" "method"))
+   (member (plist-get node :kind) (list "module" "class" "function" "method"))
    ;; lambdas are "consts' that span multiple lines
    (and (equal (plist-get node :kind) "const")
         (> (- (tide-nav--end-line node) (tide-nav--start-line node)) 0))))
@@ -176,7 +187,7 @@
   (mapcar 'tide-nav--reverse-route
           (apply 'append
                  (mapcar
-                  (lambda (x) (tide-nav--get-nodes-inner predicate x ))
+                  (lambda (x) (tide-nav--get-nodes-inner predicate x))
                   forest))))
 
 
@@ -192,7 +203,7 @@
 
 (defun tide-nav--reverse-route (node)
   "Reverse the route property in a NODE."
-  (plist-put (copy-list node) :route (reverse (plist-get x :route))))
+  (plist-put (copy-list node) :route (reverse (plist-get node :route))))
 
 (defun tide-nav--get-kinds (&optional forest)
   "Get all the kinds of nodes in the file (or under a FOREST of nodes)."
