@@ -150,7 +150,6 @@
    (mapcar (lambda (y) (tide-nav--format-node y)) (plist-get node :route))
    (list (plist-get node :text)))))
 
-
 (defun tide-nav--format-function (&optional node)
   "Format function NODE."
   (s-join "." (append
@@ -162,7 +161,6 @@
   (s-join "." (append
    (mapcar (lambda (y) (tide-nav-block--format-node y)) (plist-get node :route))
    (list (tide-nav-block--format-node node)))))
-
 
 (defun tide-nav--format-node (node)
   "Format a NODE."
@@ -199,7 +197,6 @@
   (if (funcall predicate x)
       (cons (plist-put (copy-list x) :route route) child-results)
     child-results)))
-
 
 (defun tide-nav--reverse-route (node)
   "Reverse the route property in a NODE."
