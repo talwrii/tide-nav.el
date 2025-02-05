@@ -14,6 +14,10 @@ A block is a function a class or a namespaces. If can be useful to ignore the di
 - `tide-nav-back-block` jumps to the previous block
 - `tide-nav-which-block` returns the nearest block that you are in
 
+## Demo
+
+![[demo.gif]]
+
 ## Installing
 You could use [straight](https://github.com/radian-software/straight.el) to install the package like so - if you use straight.
 
